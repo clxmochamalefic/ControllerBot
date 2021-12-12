@@ -37,6 +37,10 @@
     "ts-node": "^8.10.2"
   },
   "dependencies": {
+    "@azure/arm-compute": "^17.0.0",
+    "@azure/arm-subscriptions": "^3.1.2",
+    "@azure/identity": "^2.0.1",
+    "@azure/ms-rest-js": "^2.6.0",
     "@types/express": "^4.17.7",
     "@types/node": "^14.0.20",
     "discord.js": "^12.2.0",

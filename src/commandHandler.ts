@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { GreetCommand, TimeCommand } from "./commands";
+import { GreetCommand, TimeCommand, EchoCommand, AzureBootCommand } from "./commands";
 import Command from "./commands/commandInterface";
 import { CommandParser } from "./models/commandParser";
 
@@ -13,7 +13,9 @@ export default class CommandHandler {
 
     const commandClasses = [
       GreetCommand,
-      TimeCommand
+      TimeCommand,
+      EchoCommand,
+      AzureBootCommand,
     ];
 
     this.commands = commandClasses.map(commandClass => new commandClass());
@@ -26,7 +28,7 @@ export default class CommandHandler {
       return;
     }
 
-    message.reply(`Hive Greeter recieved '${this.echoMessage(message)}' from ${message.author.tag}`);
+    message.reply(`CMDHANDLER: Request recieved => '${this.echoMessage(message)}' from ${message.author.tag}`);
 
     const commandParser = new CommandParser(message, this.prefix);
 
