@@ -14,6 +14,7 @@
 export * from "./greetCommand";
 export * from "./timeCommand";
 export * from "./echoCommand";
+export * from "./hageCommand";
 export * from "./listCommand";
 export * from "./githubCommand";
 export * from "./azure/bootCommand";

@@ -7,7 +7,7 @@ import { ClientSecretCredential } from "@azure/identity"
 import Command from "../commandInterface";
 
 export class AzureBootCommand implements Command {
-  commandNames = ["boot", "start", "powerOff"];
+  commandNames = ["boot", "start", "powerOn"];
 
   help(commandPrefix: string): string {
     return `Use ${commandPrefix}boot to boot virtual machine on MicrosoftAzure.`;

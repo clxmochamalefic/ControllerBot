@@ -1,6 +1,7 @@
 import "dotenv/config"
 
 import { Message } from "discord.js";
+import { AbortController } from "@azure/abort-controller";
 import { ComputeManagementClient } from "@azure/arm-compute"
 import { ClientSecretCredential } from "@azure/identity"
 
@@ -23,9 +24,11 @@ export class AzureHaltCommand implements Command {
     const resGroup = process.env.AZURE_RES_GROUP || "REPLACE-WITH-YOUR-RES_GROUP"
     const vmName = process.env.AZURE_VM_NAME || "REPLACE-WITH-YOUR-VM_NAME"
 
+    const abortController = new AbortController();
+
     const credentials = new ClientSecretCredential(tenantId, clientId, secret)
     const computeClient = new ComputeManagementClient(credentials, subscriptionId)
-    const beginStartResponse = await computeClient.virtualMachines.beginPowerOff(resGroup, vmName)
+    const beginStartResponse = await computeClient.virtualMachines.beginPowerOff(resGroup, vmName, { abortSignal: abortController.signal })
 
     const response = await beginStartResponse.pollUntilDone();
     console.log(response)
