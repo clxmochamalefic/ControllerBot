@@ -2,7 +2,7 @@ import Command from "./commandInterface";
 import { Message } from "discord.js";
 
 export class GithubCommand implements Command {
-  commandNames = ["echo", "print"];
+  commandNames = ["github", "repository"];
 
   help(commandPrefix: string): string {
     return `Use ${commandPrefix}echo to get same message.`;
