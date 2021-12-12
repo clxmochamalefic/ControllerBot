@@ -1,5 +1,13 @@
 import { Message } from "discord.js";
-import { GreetCommand, TimeCommand, EchoCommand, AzureBootCommand, AzureHaltCommand } from "./commands";
+import {
+  GreetCommand,
+  TimeCommand,
+  EchoCommand,
+  ListCommand,
+  GithubCommand,
+  AzureBootCommand,
+  AzureHaltCommand
+} from "./commands";
 import Command from "./commands/commandInterface";
 import { CommandParser } from "./models/commandParser";
 
@@ -15,6 +23,8 @@ export default class CommandHandler {
       GreetCommand,
       TimeCommand,
       EchoCommand,
+      ListCommand,
+      GithubCommand,
       AzureBootCommand,
       AzureHaltCommand,
     ];
