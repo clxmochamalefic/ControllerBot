@@ -28,7 +28,7 @@ export class AzureHaltCommand implements Command {
 
     const credentials = new ClientSecretCredential(tenantId, clientId, secret)
     const computeClient = new ComputeManagementClient(credentials, subscriptionId)
-    const beginStartResponse = await computeClient.virtualMachines.beginPowerOff(resGroup, vmName, { abortSignal: abortController.signal })
+    const beginStartResponse = await computeClient.virtualMachines.beginDeallocate(resGroup, vmName, { abortSignal: abortController.signal })
 
     const response = await beginStartResponse.pollUntilDone();
     console.log(response)
