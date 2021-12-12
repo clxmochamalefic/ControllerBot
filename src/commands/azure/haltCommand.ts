@@ -6,15 +6,15 @@ import { ClientSecretCredential } from "@azure/identity"
 
 import Command from "../commandInterface";
 
-export class AzureBootCommand implements Command {
-  commandNames = ["boot", "start", "powerOff"];
+export class AzureHaltCommand implements Command {
+  commandNames = ["stop", "shutdown", "powerOff", "halt"];
 
   help(commandPrefix: string): string {
-    return `Use ${commandPrefix}boot to boot virtual machine on MicrosoftAzure.`;
+    return `Use ${commandPrefix}halt to stop virtual machine on MicrosoftAzure.`;
   }
 
   async run(message: Message): Promise<void> {
-    await message.reply("request received / begin boot VirtualMachine")
+    await message.reply("request received / shutting-down VirtualMachine")
 
     const tenantId = process.env.AZURE_TENANT_ID || "REPLACE-WITH-YOUR-TENANT-ID" 
     const clientId = process.env.AZURE_CLIENT_ID || "REPLACE-WITH-YOUR-CLIENT-ID"
@@ -25,11 +25,11 @@ export class AzureBootCommand implements Command {
 
     const credentials = new ClientSecretCredential(tenantId, clientId, secret)
     const computeClient = new ComputeManagementClient(credentials, subscriptionId)
-    const beginStartResponse = await computeClient.virtualMachines.beginStart(resGroup, vmName)
+    const beginStartResponse = await computeClient.virtualMachines.beginPowerOff(resGroup, vmName)
 
     const response = await beginStartResponse.pollUntilDone();
     console.log(response)
 
-    await message.reply("request accepted / booted VirtualMachine")
+    await message.reply("request accepted / stopped VirtualMachine")
   }
 }

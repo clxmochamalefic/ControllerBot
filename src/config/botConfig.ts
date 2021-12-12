@@ -3,7 +3,7 @@ type BotConfig = {
 };
 
 const config: BotConfig = {
-  prefix: "/scb"
+  prefix: "!scb"
 };
 
 export default config;

@@ -15,3 +15,4 @@ export * from "./greetCommand";
 export * from "./timeCommand";
 export * from "./echoCommand";
 export * from "./azure/bootCommand";
+export * from "./azure/haltCommand";
