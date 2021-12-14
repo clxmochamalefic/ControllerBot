@@ -16,6 +16,7 @@ export class AzureRebootCommand implements Command {
 
   async run(message: Message): Promise<void> {
     await message.reply("request received / begin reboot VirtualMachine")
+    await message.reply("shutting-down VirtualMachine")
 
     const tenantId = process.env.AZURE_TENANT_ID || "REPLACE-WITH-YOUR-TENANT-ID" 
     const clientId = process.env.AZURE_CLIENT_ID || "REPLACE-WITH-YOUR-CLIENT-ID"
@@ -28,11 +29,17 @@ export class AzureRebootCommand implements Command {
 
     const credentials = new ClientSecretCredential(tenantId, clientId, secret)
     const computeClient = new ComputeManagementClient(credentials, subscriptionId)
-    const pollResponse = await computeClient.virtualMachines.beginRestart(resGroup, vmName, { abortSignal: abortController.signal })
+    const pollDeallocateResponse = await computeClient.virtualMachines.beginDeallocate(resGroup, vmName, { abortSignal: abortController.signal })
 
-    const response = await pollResponse.pollUntilDone();
-    console.log(response)
+    const response = await pollDeallocateResponse.pollUntilDone();
 
+    await message.reply("stopped VirtualMachine")
+    await message.reply("begin boot VirtualMachine")
+
+    const pollStartResponse = await computeClient.virtualMachines.beginStart(resGroup, vmName)
+    const startResponse = await pollStartResponse.pollUntilDone();
+
+    await message.reply("booted VirtualMachine")
     await message.reply("request accepted / rebooted VirtualMachine")
   }
 }
