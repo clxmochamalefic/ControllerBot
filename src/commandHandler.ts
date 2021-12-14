@@ -7,6 +7,7 @@ import {
   ListCommand,
   GithubCommand,
   AzureBootCommand,
+  AzureRebootCommand,
   AzureHaltCommand
 } from "./commands";
 import Command from "./commands/commandInterface";
@@ -28,6 +29,7 @@ export default class CommandHandler {
       ListCommand,
       GithubCommand,
       AzureBootCommand,
+      AzureRebootCommand,
       AzureHaltCommand,
     ];
 

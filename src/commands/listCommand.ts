@@ -25,6 +25,7 @@ export class ListCommand implements Command {
     + "- MINECRAFT SERVER CONTROL" + " \n"
     + "    - boot / start / powerOn            => start server command (サーバ起動コマンド)" + " \n"
     + "    - stop / shutdown / powerOff / halt => stop server command (サーバ終了コマンド)" + " \n"
+    + "    - reboot / restart => restart server command (サーバ再起動コマンド)" + " \n"
     + "" + " \n"
     + "EXAMPLES: " + " \n"
     + "!scb echo !hage " + " \n"
