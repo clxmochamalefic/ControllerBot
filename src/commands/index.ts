@@ -20,3 +20,4 @@ export * from "./githubCommand";
 export * from "./azure/bootCommand";
 export * from "./azure/rebootCommand";
 export * from "./azure/haltCommand";
+export * from "./azure/statusCommand";

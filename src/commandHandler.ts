@@ -8,7 +8,8 @@ import {
   GithubCommand,
   AzureBootCommand,
   AzureRebootCommand,
-  AzureHaltCommand
+  AzureHaltCommand,
+  AzureStatusCommand,
 } from "./commands";
 import Command from "./commands/commandInterface";
 import { CommandParser } from "./models/commandParser";
@@ -31,6 +32,7 @@ export default class CommandHandler {
       AzureBootCommand,
       AzureRebootCommand,
       AzureHaltCommand,
+      AzureStatusCommand,
     ];
 
     this.commands = commandClasses.map(commandClass => new commandClass());
