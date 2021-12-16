@@ -1,11 +1,10 @@
-import "dotenv/config"
-
 import { Message } from "discord.js";
 import { ComputeManagementClient, InstanceViewStatus } from "@azure/arm-compute"
 import { NetworkManagementClient } from "@azure/arm-network"
 import { ClientSecretCredential } from "@azure/identity"
 
 import Command from "../commandInterface";
+import azureConfig from "../../config/azureConfig"
 
 export class AzureStatusCommand implements Command {
   commandNames = ["status", "stat"];
@@ -17,37 +16,24 @@ export class AzureStatusCommand implements Command {
   async run(message: Message): Promise<void> {
     await message.reply("request received / fetch VirtualMachine status")
 
-    const tenantId = process.env.AZURE_TENANT_ID || "REPLACE-WITH-YOUR-TENANT-ID" 
-    const clientId = process.env.AZURE_CLIENT_ID || "REPLACE-WITH-YOUR-CLIENT-ID"
-    const secret = process.env.AZURE_CLIENT_SECRET || "REPLACE-WITH-YOUR-CLIENT-SECRET"
-    const subscriptionId = process.env.AZURE_SUBSCRIPTION_ID || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID"
-    const resGroup = process.env.AZURE_RES_GROUP || "REPLACE-WITH-YOUR-RES_GROUP"
-    const vmName = process.env.AZURE_VM_NAME || "REPLACE-WITH-YOUR-VM_NAME"
-    const networkName = process.env.AZURE_NETWORK_NAME || "REPLACE-WITH-YOUR-VM_NAME"
+    const credentials = new ClientSecretCredential(azureConfig.tenantId, azureConfig.clientId, azureConfig.secret)
+    const computeClient = new ComputeManagementClient(credentials, azureConfig.subscriptionId)
+    const instanceViewResponse = await computeClient.virtualMachines.instanceView(azureConfig.resGroup, azureConfig.vmName);
+    const instanceResponse = await computeClient.virtualMachines.get(azureConfig.resGroup, azureConfig.vmName);
 
-    const credentials = new ClientSecretCredential(tenantId, clientId, secret)
-    const computeClient = new ComputeManagementClient(credentials, subscriptionId)
-    const instanceViewResponse = await computeClient.virtualMachines.instanceView(resGroup, vmName);
-    const instanceResponse = await computeClient.virtualMachines.get(resGroup, vmName);
-
-    console.log("instanceViewResponse")
-    console.log(instanceViewResponse)
-
-    const networkClient = new NetworkManagementClient(credentials, subscriptionId)
-    const publicIPAddresses = await networkClient.publicIPAddresses.list(resGroup);
+    const networkClient = new NetworkManagementClient(credentials, azureConfig.subscriptionId)
+    const publicIPAddresses = await networkClient.publicIPAddresses.list(azureConfig.resGroup);
 
     await message.reply("request accepted / show status below")
     const statuses = instanceViewResponse.statuses as InstanceViewStatus[]
     for (let stat of statuses) {
-        await message.reply("statuses: " + stat.displayStatus)
+      await message.reply("statuses: " + stat.displayStatus)
     }
 
     for await (let x of publicIPAddresses) {
-        console.log("networkProfile")
-        console.log(x)
-        if (x.name == networkName) {
-            await message.reply("ip address: " + x.ipAddress)
-        }
+      if (x.name == azureConfig.networkName) {
+        await message.reply("ip address: " + x.ipAddress)
+      }
     }
   }
 }
