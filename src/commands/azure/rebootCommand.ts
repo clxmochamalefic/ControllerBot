@@ -2,6 +2,7 @@ import { Message } from "discord.js";
 
 import Command from "../commandInterface";
 import { AzureControl } from "../../models/azureControl"
+import { autoShutdown } from "../../models/autoShutdown"
 
 export class AzureRebootCommand implements Command {
   commandNames = ["reboot", "restart"];
@@ -14,6 +15,7 @@ export class AzureRebootCommand implements Command {
     await message.reply("request received / begin reboot VirtualMachine")
 
     const ipAddress = await AzureControl.reboot()
+    autoShutdown.update(message)
 
     await message.reply("request accepted / rebooted VirtualMachine")
     await message.reply("ip address: " + ipAddress)

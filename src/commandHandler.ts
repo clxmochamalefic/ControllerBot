@@ -10,6 +10,7 @@ import {
   AzureRebootCommand,
   AzureHaltCommand,
   AzureStatusCommand,
+  AzureExtraOperationCommand,
 
   PushCommand,
   PopCommand,
@@ -36,6 +37,7 @@ export default class CommandHandler {
       AzureRebootCommand,
       AzureHaltCommand,
       AzureStatusCommand,
+      AzureExtraOperationCommand,
 
       PushCommand,
       PopCommand,

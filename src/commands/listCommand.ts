@@ -27,6 +27,7 @@ export class ListCommand implements Command {
     + "    - stop / shutdown / powerOff / halt => stop server (サーバ終了コマンド)" + " \n"
     + "    - reboot / restart => restart server (サーバ再起動コマンド)" + " \n"
     + "    - status / stat => show server status (サーバステータス確認コマンド)" + " \n"
+    + "    - extra / additional / okawari => extra operation (サーバ稼働延長コマンド)" + " \n"
     + "" + " \n"
     + "EXAMPLES: " + " \n"
     + "!scb echo !hage " + " \n"
