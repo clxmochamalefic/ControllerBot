@@ -10,6 +10,9 @@ import {
   AzureRebootCommand,
   AzureHaltCommand,
   AzureStatusCommand,
+
+  PushCommand,
+  PopCommand,
 } from "./commands";
 import Command from "./commands/commandInterface";
 import { CommandParser } from "./models/commandParser";
@@ -33,6 +36,9 @@ export default class CommandHandler {
       AzureRebootCommand,
       AzureHaltCommand,
       AzureStatusCommand,
+
+      PushCommand,
+      PopCommand,
     ];
 
     this.commands = commandClasses.map(commandClass => new commandClass());

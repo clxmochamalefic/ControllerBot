@@ -21,3 +21,6 @@ export * from "./azure/bootCommand";
 export * from "./azure/rebootCommand";
 export * from "./azure/haltCommand";
 export * from "./azure/statusCommand";
+
+export * from "./dev/pushCommand";
+export * from "./dev/popCommand";
