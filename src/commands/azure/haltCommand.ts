@@ -1,10 +1,7 @@
 import { Message } from "discord.js";
-import { AbortController } from "@azure/abort-controller";
-import { ComputeManagementClient } from "@azure/arm-compute"
-import { ClientSecretCredential } from "@azure/identity"
 
 import Command from "../commandInterface";
-import azureConfig from "../../config/azureConfig"
+import { AzureControl } from "../../models/azureControl"
 
 export class AzureHaltCommand implements Command {
   commandNames = ["stop", "shutdown", "powerOff", "halt"];
@@ -16,14 +13,7 @@ export class AzureHaltCommand implements Command {
   async run(message: Message): Promise<void> {
     await message.reply("request received / shutting-down VirtualMachine")
 
-    const abortController = new AbortController();
-
-    const credentials = new ClientSecretCredential(azureConfig.tenantId, azureConfig.clientId, azureConfig.secret)
-    const computeClient = new ComputeManagementClient(credentials, azureConfig.subscriptionId)
-    const beginStartResponse = await computeClient.virtualMachines.beginDeallocate(azureConfig.resGroup, azureConfig.vmName, { abortSignal: abortController.signal })
-
-    const response = await beginStartResponse.pollUntilDone();
-    console.log(response)
+    await AzureControl.halt()
 
     await message.reply("request accepted / stopped VirtualMachine / ( (o>_<) THANK YOU SEND SHUTDOWN COMMAND!!")
   }
