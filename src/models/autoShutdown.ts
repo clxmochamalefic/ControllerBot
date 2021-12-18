@@ -50,6 +50,17 @@ export class AutoShutdown {
         await this.requestMessage.reply("JA( (o0_<) oO ( " + shutdownExtraRowMinutes + "分延長入りました～☆ )")
     }
   }
+
+  clear(): void {
+    if (this.autoShutdownTimerId !== null) {
+      clearTimeout(this.autoShutdownTimerId)
+      this.autoShutdownTimerId = null
+    }
+    if (this.announceTimerId !== null) {
+      clearTimeout(this.announceTimerId)
+      this.announceTimerId = null
+    }
+  }
 }
 
 export const autoShutdown = new AutoShutdown()

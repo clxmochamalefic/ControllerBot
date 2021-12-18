@@ -2,6 +2,7 @@ import { Message } from "discord.js";
 
 import Command from "../commandInterface";
 import { AzureControl } from "../../models/azureControl"
+import { autoShutdown } from "../../models/autoShutdown"
 
 export class AzureHaltCommand implements Command {
   commandNames = ["stop", "shutdown", "powerOff", "halt"];
@@ -14,6 +15,7 @@ export class AzureHaltCommand implements Command {
     await message.reply("request received / shutting-down VirtualMachine")
 
     await AzureControl.halt()
+    autoShutdown.clear()
 
     await message.reply("request accepted / stopped VirtualMachine / ( (o>_<) THANK YOU SEND SHUTDOWN COMMAND!!")
   }
