@@ -12,12 +12,11 @@ export class AzureRebootCommand implements Command {
   }
 
   async run(message: Message): Promise<void> {
-    await message.reply("request received / begin reboot VirtualMachine")
+    await message.reply("begin reboot")
 
     const ipAddress = await AzureControl.reboot()
     autoShutdown.update(message)
 
-    await message.reply("request accepted / rebooted VirtualMachine")
-    await message.reply("ip address: " + ipAddress)
+    await message.reply("rebooted => " + ipAddress)
   }
 }

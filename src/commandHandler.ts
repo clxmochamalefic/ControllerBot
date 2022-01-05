@@ -53,8 +53,6 @@ export default class CommandHandler {
       return;
     }
 
-    message.reply(`CMDHANDLER: Request recieved => '${this.echoMessage(message)}' from ${message.author.tag}`);
-
     const commandParser = new CommandParser(message, this.prefix);
 
     const matchedCommand = this.commands.find(command => command.commandNames.includes(commandParser.parsedCommandName));

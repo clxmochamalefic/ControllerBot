@@ -11,9 +11,9 @@ export class AzureStatusCommand implements Command {
   }
 
   async run(message: Message): Promise<void> {
-    await message.reply("request received / fetch VirtualMachine status")
+    await message.reply("fetch VirtualMachine status")
     const statuses = await AzureControl.status()
-    await message.reply("request accepted / show status below")
+    await message.reply("show status below")
 
     for (let stat of statuses) {
       await message.reply(stat)

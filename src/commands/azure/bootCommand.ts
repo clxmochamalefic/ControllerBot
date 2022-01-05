@@ -12,11 +12,10 @@ export class AzureBootCommand implements Command {
   }
 
   async run(message: Message): Promise<void> {
-    await message.reply("request received / begin boot VirtualMachine")
+    await message.reply("begin boot")
     const ipAddress = await AzureControl.boot()
     autoShutdown.update(message)
 
-    await message.reply("request accepted / booted VirtualMachine")
-    await message.reply("ip address: " + ipAddress)
+    await message.reply("booted => " + ipAddress)
   }
 }

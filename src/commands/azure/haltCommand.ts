@@ -12,11 +12,11 @@ export class AzureHaltCommand implements Command {
   }
 
   async run(message: Message): Promise<void> {
-    await message.reply("request received / shutting-down VirtualMachine")
+    await message.reply("shutting-down")
 
     await AzureControl.halt()
     autoShutdown.clear()
 
-    await message.reply("request accepted / stopped VirtualMachine / ( (o>_<) THANK YOU SEND SHUTDOWN COMMAND!!")
+    await message.reply("( (o>_<) VirtualMachine stopped THANK YOU SEND SHUTDOWN COMMAND!!")
   }
 }
